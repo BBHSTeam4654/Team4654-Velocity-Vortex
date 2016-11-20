@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import java.util.ArrayList;
+
 @TeleOp(name = "Driver Controlled Mode")
 public class DriverControlledOpMode extends BaseOpMode {
 
@@ -11,8 +13,10 @@ public class DriverControlledOpMode extends BaseOpMode {
     public void loop() {
         if (gamepad1.dpad_up)
             driveMode = DriveMode.ONE_STICK;
-        if (gamepad1.dpad_down)
+        if (gamepad1.dpad_left)
             driveMode = DriveMode.TANK;
+        if (gamepad1.dpad_down)
+            driveMode = DriveMode.REVERSE;
 
         float[] motorPowers = driveMode.getPowers(gamepad1, gamepad2);
 
@@ -21,11 +25,14 @@ public class DriverControlledOpMode extends BaseOpMode {
         rightFront.setPower(motorPowers[2]);
         rightBack.setPower(motorPowers[3]);
 
-        int shooter = gamepad2.right_bumper ? 1 : 0;
+        float shooter = gamepad2.right_trigger;
 
         leftShooter.setPower(shooter);
         rightShooter.setPower(shooter);
 
-        conveyor.setPower(-gamepad2.left_stick_y);
+        conveyor.setPower(gamepad2.left_stick_y);
+
+        //Telemetry goes down down here upside down ?
+        telemetry.addData("Front wheel power is " + leftFront.getPower() + " " + rightFront.getPower(), new Object());
     }
 }
