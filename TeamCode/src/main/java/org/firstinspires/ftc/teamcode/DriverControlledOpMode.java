@@ -11,28 +11,35 @@ public class DriverControlledOpMode extends BaseOpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.dpad_up)
-            driveMode = DriveMode.ONE_STICK;
-        if (gamepad1.dpad_left)
-            driveMode = DriveMode.TANK;
-        if (gamepad1.dpad_down)
-            driveMode = DriveMode.REVERSE;
+        try {
+            if (gamepad1.dpad_up)
+                driveMode = DriveMode.ONE_STICK;
+            if (gamepad1.dpad_left)
+                driveMode = DriveMode.TANK;
+            if (gamepad1.dpad_down)
+                driveMode = DriveMode.REVERSE;
 
-        float[] motorPowers = driveMode.getPowers(gamepad1, gamepad2);
+            float[] motorPowers = driveMode.getPowers(gamepad1, gamepad2);
 
-        leftFront.setPower(motorPowers[0]);
-        leftBack.setPower(motorPowers[1]);
-        rightFront.setPower(motorPowers[2]);
-        rightBack.setPower(motorPowers[3]);
+            leftFront.setPower(motorPowers[0]);
+            leftBack.setPower(motorPowers[1]);
+            rightFront.setPower(motorPowers[2]);
+            rightBack.setPower(motorPowers[3]);
 
-        float shooter = gamepad2.right_trigger;
+            float shooter = gamepad2.right_trigger;
 
-        leftShooter.setPower(shooter);
-        rightShooter.setPower(shooter);
+            leftShooter.setPower(shooter);
+            rightShooter.setPower(shooter);
 
-        conveyor.setPower(gamepad2.left_stick_y);
+            conveyor.setPower(gamepad2.left_stick_y);
 
-        //Telemetry goes down down here upside down ?
-        telemetry.addData("Front wheel power is " + leftFront.getPower() + " " + rightFront.getPower(), new Object());
+            //Telemetry goes down down here upside down ?
+            telemetry.addData("Front wheel power is " + leftFront.getPower() + " " + rightFront.getPower(), new Object());
+        } catch (Exception e) {
+        }
     }
+
+
+
 }
+

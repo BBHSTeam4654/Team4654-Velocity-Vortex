@@ -3,9 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.Range;
 
-/**
- * Created by exploravision on 11/18/2016.
- */
 public enum DriveMode {
 
     ONE_STICK {

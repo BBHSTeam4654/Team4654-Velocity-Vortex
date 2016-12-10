@@ -9,7 +9,7 @@ public abstract class BaseOpMode extends OpMode {
     public DcMotor leftFront, leftBack, rightFront, rightBack, rightShooter, leftShooter, conveyor;
 
     public void init() {
-        leftFront = hardwareMap.dcMotor.get("leftFront");
+        /*leftFront = hardwareMap.dcMotor.get("leftFront");
         leftBack = hardwareMap.dcMotor.get("leftBack");
         rightFront = hardwareMap.dcMotor.get("rightFront");
         rightBack = hardwareMap.dcMotor.get("rightBack");
@@ -18,6 +18,8 @@ public abstract class BaseOpMode extends OpMode {
         conveyor = hardwareMap.dcMotor.get("leftPaddle");
 
         leftShooter.setDirection(DcMotor.Direction.REVERSE);
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftBack.setDirection(DcMotor.Direction.REVERSE);*/
     }
 
 }
