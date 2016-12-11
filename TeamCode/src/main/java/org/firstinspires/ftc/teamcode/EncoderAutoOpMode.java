@@ -1,16 +1,35 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
-import java.util.ArrayList;
+/**
+ * Created by exploravision on 12/10/2016.
+ */
+public class EncoderAutoOpMode extends BaseOpMode {
 
-@TeleOp(name = "Driver Controlled Mode")
-public class DriverControlledOpMode extends BaseOpMode {
+    DriveMode driveMode;
+    Scanner scan;
 
-    DriveMode driveMode = DriveMode.ONE_STICK;
+    public void init() {
+    try{scan = new Scanner(new File("EncoderRecorded.txt"));
+    }
+    catch (FileNotFoundException e){
+     telemetry.addData("Error", e.getMessage());
+    }
 
-    @Override
+
+
+    }
+
     public void loop() {
+
+
+
+    }
+
+    public void drive(){
         try {
             if (gamepad1.dpad_up)
                 driveMode = DriveMode.ONE_STICK;
@@ -37,8 +56,4 @@ public class DriverControlledOpMode extends BaseOpMode {
         } catch (Exception e) {
         }
     }
-
-
-
 }
-

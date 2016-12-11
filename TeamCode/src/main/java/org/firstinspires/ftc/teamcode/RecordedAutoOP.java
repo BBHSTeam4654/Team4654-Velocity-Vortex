@@ -30,7 +30,8 @@ public class RecordedAutoOP extends BaseOpMode {
 
         DateFormat date = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH);
         try {
-            scan = new Scanner(new File(date.format(new Date()) + ".txt"));
+           // scan = new Scanner(new File(date.format(new Date()) + ".txt"));
+            scan = new Scanner(new File("controllerRecord.txt"));
         } catch (IOException e) {
             telemetry.addData("Error ", e.getMessage());
         }
@@ -44,12 +45,12 @@ public class RecordedAutoOP extends BaseOpMode {
             GamepadState g2 = new GamepadState();
             for (int i = 0; i < 43; i++) {
                 if (i <= 21) {
-                    g.array[i] = tokenizer.nextToken();
+                    g.array[i] = tokenizer.nextToken(";/\n ");
                 } else if (i <= 42 && i > 21) {
-                    g2.array[i - 21] = tokenizer.nextToken();
+                    g2.array[i - 21] = tokenizer.nextToken(";/\n ");
                 } else {
-                    g.array[43] = tokenizer.nextToken();
-                    g2.array[43] = tokenizer.nextToken();
+                    g.array[43] = tokenizer.nextToken(";/\n ");
+                    g2.array[43] = tokenizer.nextToken(";/\n ");
 
                 }
             }

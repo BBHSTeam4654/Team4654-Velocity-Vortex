@@ -31,7 +31,8 @@ public class RecorderOpMode extends DriverControlledOpMode {
     @Override
     public void start() {
         DateFormat date = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH);
-        file = new File(hardwareMap.appContext.getFilesDir(), date.format(new Date()) + ".txt");
+       // file = new File(hardwareMap.appContext.getFilesDir(), date.format(new Date()) + ".txt");
+        file = new File("controllerRecord.txt");
         telemetry.addData("File", file.getAbsolutePath());
         try {
             writer = new FileWriter(file);
@@ -68,12 +69,21 @@ public class RecorderOpMode extends DriverControlledOpMode {
         }
 
         try {
-            writer.write(state + (System.currentTimeMillis()-start));
+            writer.write(state + (System.currentTimeMillis() - start) + "\n");
         } catch (IOException e) {
             // error stuff goes in this line of this section of the code please thanky you
         }
     }
 
+    @Override
+    public void stop() {
+        try {
+            writer.close();
+        } catch (IOException e) {
+            telemetry.addData("Error", e.getMessage());
+        }
+
+    }
 
 }
 
