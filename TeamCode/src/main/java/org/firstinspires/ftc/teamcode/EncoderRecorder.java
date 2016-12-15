@@ -16,7 +16,6 @@ import java.util.Locale;
  * Created by exploravision on 12/10/2016.
  */
 @TeleOp(name = "Encoder Recorder")
-
 public class EncoderRecorder extends BaseOpMode {
 
     FileWriter writer;
@@ -25,9 +24,6 @@ public class EncoderRecorder extends BaseOpMode {
     long start = System.currentTimeMillis();
 
     public void init() {
-        DateFormat date = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH);
-        file = new File(hardwareMap.appContext.getFilesDir(), date.format(new Date()) + ".txt");
-        telemetry.addData("File", file.getAbsolutePath());
         try {
             writer = new FileWriter(new File("EncoderRecorded.txt"));
         } catch (Exception e) {
@@ -50,14 +46,14 @@ public class EncoderRecorder extends BaseOpMode {
         state += leftFront.getCurrentPosition() + " " + rightFront.getCurrentPosition() + " " + leftBack.getCurrentPosition() + " " + rightBack.getCurrentPosition()
                 + " " + leftShooter.getCurrentPosition() + " " + rightShooter.getCurrentPosition() + " " +
                 conveyor.getCurrentPosition() + " " +
-                pushRight.getPosition() + " " + pushLeft.getPosition() + "  " + (System.currentTimeMillis() - start);
+                pushRight.getPosition() + " " + pushLeft.getPosition() + "  " + (System.currentTimeMillis() - start) + "\n";
 
         try {
             writer.write(state);
         } catch (IOException e) {
             telemetry.addData("Error", e.getMessage());
         }
-
+    drive();
     }
 
     public void drive() {

@@ -30,8 +30,6 @@ public class RecorderOpMode extends DriverControlledOpMode {
 
     @Override
     public void start() {
-        DateFormat date = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH);
-       // file = new File(hardwareMap.appContext.getFilesDir(), date.format(new Date()) + ".txt");
         file = new File("controllerRecord.txt");
         telemetry.addData("File", file.getAbsolutePath());
         try {
@@ -73,6 +71,9 @@ public class RecorderOpMode extends DriverControlledOpMode {
         } catch (IOException e) {
             // error stuff goes in this line of this section of the code please thanky you
         }
+
+        DriverControlledOpMode d = new DriverControlledOpMode();
+        d.loop(); //please work idk if you will this s to move during recording
     }
 
     @Override

@@ -1,16 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.Range;
 
 import java.util.ArrayList;
 
 @TeleOp(name = "Driver Controlled Mode")
 public class DriverControlledOpMode extends BaseOpMode {
 
-    DriveMode driveMode = DriveMode.ONE_STICK;
+    protected DriveMode driveMode = DriveMode.ONE_STICK;
 
+    protected long pushLeftTime, pushRightTime;
+    protected boolean pushLeftDown, pushRightDown;
+    
     @Override
-    public void loop() {
+    public void loop() {        
         try {
             if (gamepad1.dpad_up)
                 driveMode = DriveMode.ONE_STICK;
@@ -28,17 +33,27 @@ public class DriverControlledOpMode extends BaseOpMode {
             rightFront.setPower(motorPowers[2]);
             rightBack.setPower(motorPowers[3]);
 
-            float shooter = gamepad2.right_trigger;
+            float shooter = gamepad2.right_trigger * 0.5F;
 
-            leftShooter.setPower(shooter);
-            rightShooter.setPower(shooter);
+            accelerate(leftShooter, shooter, 0.1);
+            accelerate(rightShooter, shooter, 0.1);
 
             conveyor.setPower(gamepad2.left_stick_y);
+
+            if (gamepad2.left_bumper && System.currentTimeMillis() - pushLeftTime > 1000) {
+                pushLeftDown = !pushLeftDown;
+                pushLeftTime = System.currentTimeMillis();
+                pushLeft.setPosition(pushLeftDown ? 0.5 : 1);
+            }
+            
+            if (gamepad2.right_bumper && System.currentTimeMillis() - pushRightTime > 1000) {
+                pushRightDown = !pushRightDown;
+                pushRightTime = System.currentTimeMillis();
+                pushRight.setPosition(pushRightDown ? 0.5 : 1);
+            }
         } catch (Exception e) {
         }
     }
-
-
 
 }
 

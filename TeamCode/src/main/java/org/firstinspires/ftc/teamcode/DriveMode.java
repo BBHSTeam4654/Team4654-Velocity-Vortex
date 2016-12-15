@@ -56,9 +56,9 @@ public enum DriveMode {
                 float power = multiplier * gamepad1.right_stick_x;
                 return new float[] {power, power, -power, -power};
             } else {
-                float a = multiplier * Range.clip(gamepad1.left_stick_y + gamepad1.left_stick_x, -1, 1); // front left and back right
-                float b = multiplier * Range.clip(gamepad1.left_stick_y - gamepad1.left_stick_x, -1, 1); // not front left or back right
-
+                float a = multiplier * Range.clip(-gamepad1.left_stick_y - gamepad1.left_stick_x, -1, 1); // front left and back right
+                float b = multiplier * Range.clip(-gamepad1.left_stick_y + gamepad1.left_stick_x, -1, 1); // not front left or back right
+                                //  lf lb rf rb
                 return new float[] {a, b, b, a};
             }
         }

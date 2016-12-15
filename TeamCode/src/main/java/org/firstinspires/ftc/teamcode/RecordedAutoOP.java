@@ -92,6 +92,15 @@ public class RecordedAutoOP extends BaseOpMode {
 
         conveyor.setPower((float) g2.array[16]);
 
+
+
+        if(gamepad2.left_bumper){
+            pushLeft.setPosition(150);
+        }
+        if(gamepad2.right_bumper){
+            pushRight.setPosition(150);
+        }
+
         //Telemetry goes down down here upside down ?
         telemetry.addData("Front wheel power is " + leftFront.getPower() + " " + rightFront.getPower(), new Object());
     }
