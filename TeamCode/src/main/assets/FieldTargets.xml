@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
-    <ImageTarget name="wheel" size="1.000000 0.772727" />
-    <ImageTarget name="tool" size="1.000000 0.772727" />
-    <ImageTarget name="lego" size="1.000000 0.772727" />
-    <ImageTarget name="gear" size="1.000000 0.772727" />
+    <ImageTarget name="wheel" size="254 190" />
+    <ImageTarget name="tool" size="254 190" />
+    <ImageTarget name="lego" size="254 190" />
+    <ImageTarget name="gear" size="254 190" />
   </Tracking>
 </QCARConfig>

@@ -23,6 +23,7 @@ import java.util.List;
 public class VuforiaAutoOp extends BaseOpMode {
 
     private VuforiaLocalizer vuforia;
+    private VuforiaTrackables trackables;
     VuforiaTrackable wheel; // Blue, near corner vortex
     VuforiaTrackable tool; // Red, near center
     VuforiaTrackable lego; // Blue, near center
@@ -37,7 +38,7 @@ public class VuforiaAutoOp extends BaseOpMode {
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
-        VuforiaTrackables trackables = vuforia.loadTrackablesFromAsset("FieldTargets");
+        trackables = vuforia.loadTrackablesFromAsset("FieldTargets");
         wheel = trackables.get(0); // Blue, near corner vortex
         tool = trackables.get(1); // Red, near center
         lego = trackables.get(2); // Blue, near center
@@ -47,16 +48,23 @@ public class VuforiaAutoOp extends BaseOpMode {
         lego.setLocation(OpenGLMatrix.translation(1828.8F, -914.4F, 152.4F).multiplied(Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.XZX, AngleUnit.DEGREES, 90, -90, 0)));
         tool.setLocation(OpenGLMatrix.translation(914.4F, -1828.8F, 152.4F).multiplied(Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.XZX, AngleUnit.DEGREES, 90, 0, 0)));
         gear.setLocation(OpenGLMatrix.translation(-304.8F, -1828.8F, 152.4F).multiplied(Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.XZX, AngleUnit.DEGREES, 90, 0, 0)));
+
+        for (VuforiaTrackable vt : trackables) {
+            ((VuforiaTrackableDefaultListener) vt.getListener()).setPhoneInformation(OpenGLMatrix.translation(0F, 0F, 0F).multiplied(Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.YZY, AngleUnit.DEGREES, -90, 0, 0)), parameters.cameraDirection);
+        }
+    }
+
+    public void start() {
+        trackables.activate();
     }
 
     @Override
     public void loop() {
-        for (VuforiaTrackable vt : new VuforiaTrackable[] {}) {
-            telemetry.addData(Integer.toHexString(System.identityHashCode(vt)), ((VuforiaTrackableDefaultListener) vt.getListener()).isVisible() ? "Visible" : "Not Visible");    //
+        for (VuforiaTrackable vt : trackables) {
+            telemetry.addData(Integer.toHexString(System.identityHashCode(vt)), ((VuforiaTrackableDefaultListener) vt.getListener()).isVisible() ? "Visible" : "Not Visible");
+            OpenGLMatrix pos = ((VuforiaTrackableDefaultListener) vt.getListener()).getUpdatedRobotLocation();
+            telemetry.addData(vt.toString(), pos == null ? "NOT VISIBLE" : pos.formatAsTransform());
         }
-
-        telemetry.addData( ((VuforiaTrackableDefaultListener) lego.getListener()).getCameraDirection().toString(), new Object());
-//9
     }
 
 }
