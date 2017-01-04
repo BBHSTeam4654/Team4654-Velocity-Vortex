@@ -13,8 +13,8 @@ import com.qualcomm.robotcore.hardware.LED;
 /**
  * Created by exploravision on 12/8/2016.
  */
-@TeleOp(name = "Color Sensor Test", group="Tests")
-public class ColoredThingOpMode extends LinearOpMode {
+@TeleOp(name = "Color Sensor Test", group="test")
+public class ColorSensorTestMode extends LinearOpMode {
 //ColorSensor sensor;
 //  //  LED lights = hardwareMap.led.get("Strip");
 //  public void init(){

@@ -2,10 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
-@Autonomous(name = "Launch 1.0", group = "Launch")
-
+@Autonomous(name = "Launch Power Test", group = "test")
 public class BallLaunchAutoOp extends BaseOpMode {
 
     public double power = 0.4, cPower = 0.4;
@@ -19,6 +16,8 @@ public class BallLaunchAutoOp extends BaseOpMode {
     }
 
     public void loop() {
+        super.loop();
+
         float time = (System.currentTimeMillis() - startTime) / 1000F;
 
         if (gamepad1.y) {
@@ -75,7 +74,7 @@ public class BallLaunchAutoOp extends BaseOpMode {
         accelerate(leftShooter, shooterOn ? power : 0, 0.05);
         accelerate(rightShooter, shooterOn ? power : 0, 0.05);
 
-        accelerate(conveyor, converyerOn ? -cPower : 0, 0.1);
+        accelerate(paddle, converyerOn ? -cPower : 0, 0.1);
 
         telemetry.addData("Shooter On", shooterOn);
         telemetry.addData("Shooter Power", Math.round(power * 1000f) / 1000f);

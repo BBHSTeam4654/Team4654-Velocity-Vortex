@@ -1,21 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
-/**
- * Created by exploravision on 12/10/2016.
- */
-@TeleOp(name = "Encoder Recorder")
+@TeleOp(name = "Encoder Recorder", group = "recorded")
+@Disabled
 public class EncoderRecorder extends BaseOpMode {
 
     FileWriter writer;
@@ -35,7 +29,7 @@ public class EncoderRecorder extends BaseOpMode {
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        conveyor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        paddle.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
     }
@@ -45,7 +39,7 @@ public class EncoderRecorder extends BaseOpMode {
         drive();
         state += leftFront.getCurrentPosition() + " " + rightFront.getCurrentPosition() + " " + leftBack.getCurrentPosition() + " " + rightBack.getCurrentPosition()
                 + " " + leftShooter.getCurrentPosition() + " " + rightShooter.getCurrentPosition() + " " +
-                conveyor.getCurrentPosition() + " " +
+                paddle.getCurrentPosition() + " " +
                 pushRight.getPosition() + " " + pushLeft.getPosition() + "  " + (System.currentTimeMillis() - start) + "\n";
 
         try {
@@ -79,7 +73,7 @@ public class EncoderRecorder extends BaseOpMode {
             leftShooter.setPower(shooter);
             rightShooter.setPower(shooter);
 
-            conveyor.setPower(gamepad2.left_stick_y);
+            paddle.setPower(gamepad2.left_stick_y);
         } catch (Exception e) {
         }
     }

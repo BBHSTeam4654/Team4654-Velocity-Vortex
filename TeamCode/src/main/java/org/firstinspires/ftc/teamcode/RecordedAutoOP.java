@@ -1,19 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-@Autonomous(name = "Recorded Op Mode")
-public class RecordedAutoOP extends BaseOpMode {
+@Autonomous(name = "Recorded Op Mode", group = "recorded")
+@Disabled
+public class RecordedAutoOp extends BaseOpMode {
 
     Scanner scan;
 
@@ -90,7 +91,7 @@ public class RecordedAutoOP extends BaseOpMode {
         leftShooter.setPower(shooter);
         rightShooter.setPower(shooter);
 
-        conveyor.setPower((float) g2.array[16]);
+        paddle.setPower((float) g2.array[16]);
 
 
 

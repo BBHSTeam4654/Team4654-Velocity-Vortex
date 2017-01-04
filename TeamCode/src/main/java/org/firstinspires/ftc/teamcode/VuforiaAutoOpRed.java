@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.graphics.drawable.GradientDrawable;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.vuforia.Trackable;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -16,22 +13,27 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-import java.util.Arrays;
-import java.util.List;
+@Autonomous(name = "Vuforia Autonomous Mode (Red)", group = "vuforia")
+public class VuforiaAutoOpRed extends BaseOpMode {
 
-@Autonomous(name = "Vuforia Test")
-public class VuforiaAutoOp extends BaseOpMode {
+    /**
+     * Whether or not this op mode is for the red side (blue otherwise). Note that thought this class is named the red op mode, it is written so that subclasses can change this variable in [@link #init()}.
+     */
+    public boolean red = true;
 
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables trackables;
-    VuforiaTrackable wheel; // Blue, near corner vortex
-    VuforiaTrackable tool; // Red, near center
-    VuforiaTrackable lego; // Blue, near center
-    VuforiaTrackable gear; // Red, near corner vortex
+    private VuforiaTrackable wheel; // Blue, near corner vortex
+    private VuforiaTrackable tool; // Red, near center
+    private VuforiaTrackable lego; // Blue, near center
+    private VuforiaTrackable gear; // Red, near corner vortex
+
+    private VuforiaTrackable target;
+    private OpenGLMatrix lastPosition;
 
     @Override
     public void init() {
-     //   super.init();
+        super.init();
 
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "AV7cAYn/////AAAAGXDR1Nv900lOoewPO1Nq3ypDBIfk+d8X+UJOgVQZn5ZvQIY5Y4yGL6DVf24bEoMOVLCq5sZXPs9937r2zpeSZQaaaJbxeWggveVuvccsVlBdR38brId6fIRi/ssxtkUpVppCaRDO1N6K7IVbAJWrhpv1rG2DqTcS51znxjEYDE34AN6sNkurIq/qs0tLfvI+lx5VYRKdqh5LwnVt2HnpdX836kSbAN/1wnupzlLSKHcVPF9zlmRjCXrHduW8ikVefKAPGNCEzaDj4D+X+YM9iaHj9H8qN23bbaT81Ze3g5WwrXsb6dsX1N3+FqeXbiEUB02lXsmGwtvCJI89xutgPzlDAHqerduaLS2WZbL3oVyS";
@@ -54,16 +56,32 @@ public class VuforiaAutoOp extends BaseOpMode {
         }
     }
 
+    @Override
     public void start() {
         trackables.activate();
+
+        target = red ? gear : wheel;
     }
 
     @Override
     public void loop() {
-        for (VuforiaTrackable vt : trackables) {
-            telemetry.addData(Integer.toHexString(System.identityHashCode(vt)), ((VuforiaTrackableDefaultListener) vt.getListener()).isVisible() ? "Visible" : "Not Visible");
-            OpenGLMatrix pos = ((VuforiaTrackableDefaultListener) vt.getListener()).getUpdatedRobotLocation();
-            telemetry.addData(vt.toString(), pos == null ? "NOT VISIBLE" : pos.formatAsTransform());
+        super.loop();
+
+//        for (VuforiaTrackable vt : trackables) {
+//            telemetry.addData(Integer.toHexString(System.identityHashCode(vt)), ((VuforiaTrackableDefaultListener) vt.getListener()).isVisible() ? "Visible" : "Not Visible");
+//            OpenGLMatrix pos = ((VuforiaTrackableDefaultListener) vt.getListener()).getUpdatedRobotLocation();
+//            telemetry.addData(vt.toString(), pos == null ? "NOT VISIBLE" : pos.formatAsTransform());
+//        }
+
+        VuforiaTrackableDefaultListener vt = (VuforiaTrackableDefaultListener) target.getListener();
+
+        if (vt.isVisible()) {
+            OpenGLMatrix pos = vt.getUpdatedRobotLocation();
+            if (pos != null) lastPosition = pos;
+
+            // TODO Go to the target
+        } else {
+            BasicDriveFunctions.rotate(0.5F, red, leftBack, leftFront, rightBack, rightFront);
         }
     }
 

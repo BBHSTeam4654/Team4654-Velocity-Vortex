@@ -1,13 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-/**
- * Created by exploravision on 12/10/2016.
- */
+@Autonomous(name = "Recorded Encoder Mode", group = "recorded")
+@Disabled
 public class EncoderAutoOpMode extends BaseOpMode {
 
     DriveMode driveMode;
