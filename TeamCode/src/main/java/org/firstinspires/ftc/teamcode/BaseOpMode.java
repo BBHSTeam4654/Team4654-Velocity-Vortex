@@ -20,7 +20,7 @@ public abstract class BaseOpMode extends OpMode {
         leftShooter = hardwareMap.dcMotor.get("leftShooter");
         paddle = hardwareMap.dcMotor.get("paddle");
 
-        rightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftShooter.setDirection(DcMotor.Direction.REVERSE);
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
 
@@ -34,16 +34,16 @@ public abstract class BaseOpMode extends OpMode {
     }
 
     public void loop() {
-        telemetry.addData("Left Front Power: ", leftFront.getPower());
-        telemetry.addData("Left Back Power: ", leftBack.getPower());
-        telemetry.addData("Right Front Power: ", rightFront.getPower());
-        telemetry.addData("Right Back Power: ", rightBack.getPower());
-        telemetry.addData("Right Shooter Power: ", rightShooter.getPower());
-        telemetry.addData("Left Shooter Power: ", leftShooter.getPower());
-        telemetry.addData("Paddle Power: ", paddle.getPower());
+        telemetry.addData("Left Front Power", leftFront.getPower());
+        telemetry.addData("Left Back Power", leftBack.getPower());
+        telemetry.addData("Right Front Power", rightFront.getPower());
+        telemetry.addData("Right Back Power", rightBack.getPower());
+        telemetry.addData("Right Shooter Power", rightShooter.getPower());
+        telemetry.addData("Left Shooter Power", leftShooter.getPower());
+        telemetry.addData("Paddle Power", paddle.getPower());
 
-        telemetry.addData("Push Left Pos: ", pushLeft.getPosition());
-        telemetry.addData("Push Right Pos: ", pushRight.getPosition());
+        telemetry.addData("Push Left Pos", pushLeft.getPosition());
+        telemetry.addData("Push Right Pos", pushRight.getPosition());
     }
 
     public void accelerate(DcMotor motor, double targetValue, double maxChange) {

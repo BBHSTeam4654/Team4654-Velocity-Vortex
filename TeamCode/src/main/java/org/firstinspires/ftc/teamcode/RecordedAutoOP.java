@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 
 @Autonomous(name = "Recorded Op Mode", group = "recorded")
 @Disabled
-public class RecordedAutoOp extends BaseOpMode {
+public class RecordedAutoOP extends BaseOpMode {
 
     Scanner scan;
 
