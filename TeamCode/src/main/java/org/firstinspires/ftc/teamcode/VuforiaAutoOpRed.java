@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -19,7 +19,7 @@ public class VuforiaAutoOpRed extends BaseOpMode {
     /**
      * Whether or not this op mode is for the red side (blue otherwise). Note that thought this class is named the red op mode, it is written so that subclasses can change this variable in [@link #init()}.
      */
-    public boolean red = true;
+   public boolean red = true;
 
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables trackables;
@@ -30,6 +30,7 @@ public class VuforiaAutoOpRed extends BaseOpMode {
 
     private VuforiaTrackable target;
     private OpenGLMatrix lastPosition;
+    private OpenGLMatrix toTarget;
 
     @Override
     public void init() {
@@ -57,7 +58,7 @@ public class VuforiaAutoOpRed extends BaseOpMode {
     }
 
     @Override
-    public void start() {
+  public void start() {
         trackables.activate();
 
         target = red ? gear : wheel;
@@ -65,6 +66,7 @@ public class VuforiaAutoOpRed extends BaseOpMode {
 
     @Override
     public void loop() {
+
         super.loop();
 
 //        for (VuforiaTrackable vt : trackables) {
@@ -72,17 +74,26 @@ public class VuforiaAutoOpRed extends BaseOpMode {
 //            OpenGLMatrix pos = ((VuforiaTrackableDefaultListener) vt.getListener()).getUpdatedRobotLocation();
 //            telemetry.addData(vt.toString(), pos == null ? "NOT VISIBLE" : pos.formatAsTransform());
 //        }
-
+telemetry.addData("fdsfs","ffds");
         VuforiaTrackableDefaultListener vt = (VuforiaTrackableDefaultListener) target.getListener();
 
         if (vt.isVisible()) {
             OpenGLMatrix pos = vt.getUpdatedRobotLocation();
-            if (pos != null) lastPosition = pos;
+            if (pos != null){ lastPosition = pos;
+            telemetry.addData("matrix",pos.toString());
+                telemetry.addData("fdfdsfs","lkjlkj");
+            }
 
-            // TODO Go to the target
+
         } else {
             BasicDriveFunctions.rotate(0.5F, red, leftBack, leftFront, rightBack, rightFront);
+
+
         }
+
+
+
     }
 
 }
+

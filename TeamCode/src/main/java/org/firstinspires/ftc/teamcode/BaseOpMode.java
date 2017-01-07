@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 public abstract class BaseOpMode extends OpMode {
 
     public DcMotor leftFront, leftBack, rightFront, rightBack, rightShooter, leftShooter, paddle;
-    public Servo pushLeft, pushRight;
+    public Servo pushLeft, pushRight, flipper;
 
     public void init() {
         leftFront = hardwareMap.dcMotor.get("leftFront");
@@ -26,11 +26,13 @@ public abstract class BaseOpMode extends OpMode {
 
         pushLeft = hardwareMap.servo.get("pushLeft");
         pushRight = hardwareMap.servo.get("pushRight");
+        flipper = hardwareMap.servo.get("flipper");
 
         pushLeft.setDirection(Servo.Direction.REVERSE);
 
         pushLeft.setPosition(1);
         pushRight.setPosition(1);
+        flipper.setPosition(1);
     }
 
     public void loop() {
@@ -44,6 +46,7 @@ public abstract class BaseOpMode extends OpMode {
 
         telemetry.addData("Push Left Pos", pushLeft.getPosition());
         telemetry.addData("Push Right Pos", pushRight.getPosition());
+        telemetry.addData("Flipper Pos", flipper.getPosition());
     }
 
     public void accelerate(DcMotor motor, double targetValue, double maxChange) {

@@ -7,8 +7,8 @@ public class DriverControlledOpMode extends BaseOpMode {
 
     protected DriveMode driveMode = DriveMode.ONE_STICK;
 
-    protected long pushLeftTime, pushRightTime;
-    protected boolean pushLeftDown, pushRightDown;
+    protected long pushLeftTime, pushRightTime, flipperTime;
+    protected boolean pushLeftDown, pushRightDown, flipperDown;
     
     @Override
     public void loop() {
@@ -34,12 +34,12 @@ public class DriverControlledOpMode extends BaseOpMode {
             rightFront.setPower(multiplier * motorPowers[2]);
             rightBack.setPower(multiplier * motorPowers[3]);
 
-            float shooter = gamepad2.right_trigger * 0.5F;
+            float shooter = gamepad2.right_trigger * 0.35F;
 
             accelerate(leftShooter, shooter, 0.075);
             accelerate(rightShooter, shooter, 0.075);
 
-            paddle.setPower(gamepad2.left_stick_y);
+            paddle.setPower(gamepad2.left_stick_y * 0.5);
 
             if (gamepad2.left_bumper && System.currentTimeMillis() - pushLeftTime > 1000) {
                 pushLeftDown = !pushLeftDown;
@@ -52,6 +52,8 @@ public class DriverControlledOpMode extends BaseOpMode {
                 pushRightTime = System.currentTimeMillis();
                 pushRight.setPosition(pushRightDown ? 0.5 : 1);
             }
+
+            flipper.setPosition(gamepad2.a ? 0.75 : 1);
         } catch (Exception e) {
             telemetry.addData("Error: ", e.toString());
         }
