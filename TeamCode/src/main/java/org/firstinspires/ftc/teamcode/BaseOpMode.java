@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.util.Range;
 
 public abstract class BaseOpMode extends OpMode {
 
+    public static final int ENCODER_PER_PADDLE = 800; // 525 for neverest 40; don't remember which
+
     public DcMotor leftFront, leftBack, rightFront, rightBack, rightShooter, leftShooter, paddle;
     public Servo pushLeft, pushRight, flipper;
 
@@ -28,7 +30,7 @@ public abstract class BaseOpMode extends OpMode {
         pushRight = hardwareMap.servo.get("pushRight");
         flipper = hardwareMap.servo.get("flipper");
 
-        pushLeft.setDirection(Servo.Direction.REVERSE);
+        pushRight.setDirection(Servo.Direction.REVERSE);
 
         pushLeft.setPosition(1);
         pushRight.setPosition(1);
