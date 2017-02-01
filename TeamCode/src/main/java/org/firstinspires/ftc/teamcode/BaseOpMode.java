@@ -6,12 +6,17 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public abstract class BaseOpMode extends OpMode {
 
-    public static final int ENCODER_PER_PADDLE = 800; // 525 for neverest 40; don't remember which
+    public static final int ENCODER_PER_PADDLE = 525; // 800 for neverest 60; don't remember which
 
     public DcMotor leftFront, leftBack, rightFront, rightBack, rightShooter, leftShooter, paddle;
     public Servo pushLeft, pushRight, flipper;
+
+    public long lastTime = 0;
+    public int lastEncoder = 0;
 
     public void init() {
         leftFront = hardwareMap.dcMotor.get("leftFront");
@@ -23,6 +28,8 @@ public abstract class BaseOpMode extends OpMode {
         paddle = hardwareMap.dcMotor.get("paddle");
 
         leftShooter.setDirection(DcMotor.Direction.REVERSE);
+        leftShooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        telemetry.addData("RunMode", leftShooter.getMode().name());
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
 
@@ -37,6 +44,10 @@ public abstract class BaseOpMode extends OpMode {
         flipper.setPosition(1);
     }
 
+    public void start() {
+        leftShooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
     public void loop() {
         telemetry.addData("Left Front Power", leftFront.getPower());
         telemetry.addData("Left Back Power", leftBack.getPower());
@@ -49,6 +60,15 @@ public abstract class BaseOpMode extends OpMode {
         telemetry.addData("Push Left Pos", pushLeft.getPosition());
         telemetry.addData("Push Right Pos", pushRight.getPosition());
         telemetry.addData("Flipper Pos", flipper.getPosition());
+
+        long time = System.currentTimeMillis();
+        if (time > 250) {
+            int encoder = leftShooter.getCurrentPosition();
+            telemetry.addData("Left Shooter RPM", 1748.0 * (encoder - lastEncoder) / (time - lastTime));
+            telemetry.addData("Encoder Pos", encoder);
+            lastEncoder = encoder;
+            lastTime = time;
+        }
     }
 
     public void accelerate(DcMotor motor, double targetValue, double maxChange) {

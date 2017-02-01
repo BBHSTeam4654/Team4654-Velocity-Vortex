@@ -7,8 +7,8 @@ public class DriverControlledOpMode extends BaseOpMode {
 
     protected DriveMode driveMode = DriveMode.ONE_STICK;
 
-    protected long pushLeftTime, pushRightTime, flipperTime;
-    protected boolean pushLeftDown, pushRightDown, flipperDown;
+    protected long pushLeftTime, pushRightTime;
+    protected boolean pushLeftDown, pushRightDown;
     
     @Override
     public void loop() {
@@ -34,26 +34,25 @@ public class DriverControlledOpMode extends BaseOpMode {
             rightFront.setPower(multiplier * motorPowers[2]);
             rightBack.setPower(multiplier * motorPowers[3]);
 
-            float shooter = gamepad2.right_trigger * 0.35F;
+            float shooter = gamepad2.dpad_down ? -0.1F : (gamepad2.left_bumper || gamepad2.y ? 0.17F : gamepad2.right_trigger * 0.3F);
 
             accelerate(leftShooter, shooter, 0.075);
             accelerate(rightShooter, shooter, 0.075);
 
-            paddle.setPower(gamepad2.left_stick_y * 0.5);
+            paddle.setPower(gamepad2.left_stick_y * 0.25);
 
             if (gamepad2.left_bumper && System.currentTimeMillis() - pushLeftTime > 1000) {
                 pushLeftDown = !pushLeftDown;
                 pushLeftTime = System.currentTimeMillis();
-                pushLeft.setPosition(pushLeftDown ? 0.5 : 1);
+                pushLeft.setPosition(pushLeftDown ? 0.35 : 1);
             }
             
             if (gamepad2.right_bumper && System.currentTimeMillis() - pushRightTime > 1000) {
                 pushRightDown = !pushRightDown;
-                pushRightTime = System.currentTimeMillis();
-                pushRight.setPosition(pushRightDown ? 0.5 : 1);
+                pushRight.setPosition(pushRightDown ? 0.35 : 1);
             }
 
-            flipper.setPosition(gamepad2.a ? 0.75 : 1);
+            flipper.setPosition(gamepad2.b || gamepad2.a ? 0.75 : 1);
         } catch (Exception e) {
             telemetry.addData("Error: ", e.toString());
         }
