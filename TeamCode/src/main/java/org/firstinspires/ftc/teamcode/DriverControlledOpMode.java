@@ -23,7 +23,8 @@ public class DriverControlledOpMode extends BaseOpMode {
                 driveMode = DriveMode.REVERSE;
             if (gamepad1.dpad_right)
                 driveMode = DriveMode.MECANUM;
-
+            if(gamepad2.left_trigger > .1)
+                release.setPosition(0);
             telemetry.addData("Drive Mode: ", driveMode.toString());
 
             float multiplier = 1.0F - gamepad1.left_trigger * 0.9F;

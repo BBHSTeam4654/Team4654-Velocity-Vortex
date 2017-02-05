@@ -2,18 +2,15 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public abstract class BaseOpMode extends OpMode {
 
     public static final int ENCODER_PER_PADDLE = 525; // 800 for neverest 60; don't remember which
 
     public DcMotor leftFront, leftBack, rightFront, rightBack, rightShooter, leftShooter, paddle;
-    public Servo pushLeft, pushRight, flipper;
+    public Servo pushLeft, pushRight, flipper,release;
 
     public long lastTime = 0;
     public int lastEncoder = 0;
@@ -36,12 +33,14 @@ public abstract class BaseOpMode extends OpMode {
         pushLeft = hardwareMap.servo.get("pushLeft");
         pushRight = hardwareMap.servo.get("pushRight");
         flipper = hardwareMap.servo.get("flipper");
+        release = hardwareMap.servo.get("release");
 
         pushRight.setDirection(Servo.Direction.REVERSE);
 
         pushLeft.setPosition(1);
         pushRight.setPosition(1);
         flipper.setPosition(1);
+        release.setPosition(1);
     }
 
     public void start() {
