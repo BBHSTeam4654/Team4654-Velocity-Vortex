@@ -22,7 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 @Autonomous(name = "Vuforia Autonomous Mode (Red)", group = "vuforia")
 public class VuforiaAutoOpRed extends BaseOpMode {
-
+//when on red go for legos when on blue go for tools
 
     /**
      * Whether or not this op mode is for the red side (blue otherwise). Note that thought this class is named the red op mode, it is written so that subclasses can change this variable in [@link #init()}.
@@ -50,11 +50,7 @@ public class VuforiaAutoOpRed extends BaseOpMode {
     public void init() {
         super.init();
 
-      //  SensorManager mSensorManager;
-      //  Sensor mSensor;
 
-        //mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-       // mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 
 
 
@@ -83,7 +79,7 @@ public class VuforiaAutoOpRed extends BaseOpMode {
   public void start() {
         trackables.activate();
 
-        target = red ? gear : wheel;
+        target = red ? tool : lego;
     }
 
     @Override
